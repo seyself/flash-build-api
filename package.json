@@ -1,11 +1,11 @@
 {
   "name": "flash-build-api",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Various (opinionated) wrappers for binaries of the air and flex sdk",
   "main": "lib/index.js",
   "scripts": {
     "prepublish": "./scripts/compile.js",
-    "test": "scripts/test.js"
+    "test": "./scripts/test.js"
   },
   "repository": {
     "type": "git",
@@ -25,5 +25,8 @@
     "should": "1.2.1",
     "mocha": "1.8.1",
     "coffee-script": "1.6.1"
+  },
+  "dependencies": {
+    "node-expat": "~2.0.0"
   }
 }
