@@ -1,15 +1,20 @@
-{getFlexHome, addRegularArguments, executeJar, getPlatformForTarget, deepExtend} = require './index'
-{exec} = require 'child_process'
+addRegularArguments  = require './addRegularArguments'
+deepExtend           = require './deepExtend'
+executeJar           = require './executeJar'
+getFlexHome          = require './getFlexHome'
+getPlatformForTarget = require './getPlatformForTarget'
+{exec}               = require 'child_process'
 
 executeWithPlatform = (command, commandArgs, args, root, platform, onComplete)->
-    flexHome = getFlexHome(args)
-    argList = []
     addArgs = {}
     addArgs[command] = null
     addArgs.platform = platform
     if args.device then addArgs.device = args.device
-    addRegularArguments(deepExtend(addArgs, commandArgs), argList, " ")
-    executeJar "#{flexHome}/lib/adt.jar", argList.join(" "), root, onComplete
+
+    executeJar getFlexHome(args)+"/lib/adt.jar"
+        , addRegularArguments(deepExtend(addArgs, commandArgs), [], " ").join(" ")
+        , root
+        , onComplete
 
 module.exports = {
     executeWithPlatform: executeWithPlatform
