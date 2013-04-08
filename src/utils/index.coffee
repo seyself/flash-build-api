@@ -184,4 +184,6 @@ module.exports = {
     addRegularArgument
     pushToDeepMember
     executeJar
+    genericAdt: require "./genericAdt"
+    parseXml: require "./parseXml"
 }
