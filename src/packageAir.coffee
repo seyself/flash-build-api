@@ -3,6 +3,24 @@
 fs = require 'fs'
 path = require 'path'
 
+getStorePass = (key)->
+    if key?
+        filePath = path.resolve(process.cwd(), ".storepass")
+        if fs.existsSync filePath
+            try
+                data = JSON.parse(fs.readFileSync(filePath))
+                return data[key]
+            catch e
+                console.warn(e)
+    return null
+
+getStoreType = (keystore)->    
+    ext = path.extname(keystore)
+    return (
+        if ext == ".keystore" then "jks"
+        else if ext == ".p12" or ext == ".pfx" then "pkcs12"
+        else throw "No keystore type defined"
+    )
 
 module.exports = (args, root, onComplete)->
     flexHome = getFlexHome(args)
@@ -12,19 +30,14 @@ module.exports = (args, root, onComplete)->
     try
         argList.push("-target "+args.target)
 
-        if !args.storetype?
-            ext = path.extname(args.keystore)
-            args.storetype = 
-                if ext == ".keystore" then "jks"
-                else if ext == ".p12" or ext == ".pfx" then "pkcs12"
-                else throw "No keystore type defined"
+        args.storetype ?= getStoreType(args.keystore)
+        args.storepass ?= getStorePass(args.storekey)
 
         argList.push("-storetype "+args.storetype)
         argList.push addRegularArgument("keystore", args.keystore, " ")
         argList.push addRegularArgument("storepass", args.storepass, " ")
 
-        addRegularArguments(args, argList, " ", "version", "extDirs", "app-id", "keystore", "storepass", "flexHome", "mainFile", "inputDescriptor", "target", "output", "storetype", "paths", "package-file-name", "descriptor")
-
+        addRegularArguments(args, argList, " ", "version", "extDirs", "app-id", "keystore", "storepass", "flexHome", "mainFile", "inputDescriptor", "target", "output", "storetype", "storekey", "paths", "package-file-name", "descriptor")
         argList.push(inQuotes(args.output))
         argList.push(inQuotes(args.descriptor))
 
@@ -48,8 +61,10 @@ module.exports = (args, root, onComplete)->
         for pathInfo in cFiles
             argList.push("-C "+inQuotes(path.dirname(pathInfo['file-path']))+" "+inQuotes(path.basename(pathInfo['file-path'])))
 
-        for extdir in args.extDirs
-            argList.push addRegularArgument("extdir", args.extDirs, " ")
+        if args.extDirs
+            for extdir in args.extDirs
+                argList.push "-extdir"
+                argList.push inQuotes(extdir)
 
     catch e
         onComplete(e)

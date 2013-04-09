@@ -34,7 +34,7 @@ module.exports = (path, format, onComplete)->
                 if !hasError
                     if current != undefined then tree.push(current)
                     current = if current then current[nodeType] else null
-                    if current == undefined then throw "Unexpected node type "+treeNames.join(">")+">#{nodeType}"
+                    if current == undefined then throw "Unexpected node type "+treeNames.join(">")+">#{nodeType} @ #{path}"
                     if typeof current == "function"
                         current = current(attributes)
                     treeNames.push(nodeType)

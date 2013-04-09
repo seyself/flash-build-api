@@ -13,4 +13,5 @@ module.exports = {
     executeJar          : require './executeJar'
     genericAdt          : require './genericAdt'
     parseXml            : require './parseXml'
+    resolveSymlink      : require './resolveSymlink'
 }
