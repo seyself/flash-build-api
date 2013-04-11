@@ -1,6 +1,6 @@
 {
   "name": "flash-build-api",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Various (opinionated) wrappers for binaries of the air and flex sdk",
   "main": "lib/index.js",
   "scripts": {
@@ -27,6 +27,7 @@
     "coffee-script": "1.6.1"
   },
   "dependencies": {
-    "node-expat": "~2.0.0"
+    "node-expat": "~2.0.0",
+    "xmldom": "~0.1.15"
   }
 }
