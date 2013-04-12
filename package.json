@@ -1,6 +1,6 @@
 {
   "name": "flash-build-api",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Various (opinionated) wrappers for binaries of the air and flex sdk",
   "main": "lib/index.js",
   "scripts": {

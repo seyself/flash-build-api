@@ -71,16 +71,17 @@ startServer = (host, port, waitForPolicyFile, timeout, onComplete)->
                 if error
                     hasError = true
 
-        stream.on "end", ->
-            end "Server prematurely closed"
+        stream.on "end", -> end "Server prematurely closed"
     listening = true
     end = (error)->
         if listening
             listening = false
             try
-                server.close ->
-                     onComplete(error, allData)
-                _stream.close()
+                _stream.destroy()
+            catch e
+                # ignore
+            try
+                server.close -> onComplete(error, allData)
             catch e
                 onComplete(error, allData)
     try
