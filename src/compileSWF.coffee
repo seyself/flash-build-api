@@ -1,6 +1,6 @@
 fs = require 'fs'
 path = require 'path'
-{pushToMember, getFlexHome, addRegularArguments, addDefinesSpecially, executeJar, deepExtend} = require './utils'
+{pushToMember, getFlexHome, addRegularArguments, addDefinesSpecially, executeJar, executeClassInJar, deepExtend} = require './utils'
 
 folderOf = (path) ->
     paths = path.split("/")
@@ -88,7 +88,7 @@ prepareFlashArgs = (args, root, flexHome) ->
     pushToMember(args, "compiler.library-path", "#{flexHome}/frameworks/libs/osmf.swc")
     pushToMember(args, "compiler.library-path", "#{flexHome}/frameworks/libs/textLayout.swc")
     pushToMember(args, "compiler.library-path", "#{flexHome}/frameworks/libs/air/aircore.swc")
-    pushToMember(args, "compiler.library-path", "#{flexHome}/frameworks/libs/air/airglobal.swc")
+    pushToMember(args, "compiler.external-library-path", "#{flexHome}/frameworks/libs/air/airglobal.swc")
 
     return args
 
@@ -98,12 +98,15 @@ module.exports = (args, root, onComplete) ->
         args = prepareFlashArgs(deepExtend(args, args.additionalArguments), root, flexHome)
         argList = ["+flexlib=\"#{flexHome}/frameworks\""]
         argList = addDefinesSpecially(args, argList)
-        argList = addRegularArguments(args, argList, "=", "additionalArguments", "additionalOptions", "flexHome", "define")
+        argList = addRegularArguments(args, argList, "=", "additionalArguments", "additionalOptions", "flexHome", "asc2", "define")
         argList.push args.additionalOptions
         if args.additionalArguments
             argList = addDefinesSpecially(args.additionalArguments, argList)
             
-        executeJar "#{flexHome}/lib/mxmlc.jar", argList.join(" "), root, onComplete
+        if args.asc2 == true
+            executeClassInJar "#{flexHome}/lib/compiler.jar", "com.adobe.flash.compiler.clients.MXMLC", argList.join(" "), root, onComplete
+        else
+            executeJar "#{flexHome}/lib/mxmlc.jar", argList.join(" "), root, onComplete
     catch e
         onComplete e
         return

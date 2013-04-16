@@ -11,6 +11,7 @@ module.exports = {
     addRegularArgument  : require "./addRegularArgument"
     pushToDeepMember    : require "./pushToDeepMember"
     executeJar          : require './executeJar'
+    executeClassInJar   : require './executeClassInJar'
     genericAdt          : require './genericAdt'
     parseXml            : require './parseXml'
     resolveSymlink      : require './resolveSymlink'
