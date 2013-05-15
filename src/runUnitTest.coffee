@@ -28,10 +28,6 @@ startServer = (host, port, waitForPolicyFile, timeout, onComplete)->
         classes = {}
         hasError = false
 
-        stream.on "connect", -> 
-            if !waitForPolicyFile
-                send(START_OF_TEST_RUN_ACK)
-
         stream.on "data", (data) ->
             clearTimeout waitTimeout
             data = data.substr(0, data.length-1)
@@ -72,6 +68,9 @@ startServer = (host, port, waitForPolicyFile, timeout, onComplete)->
                     hasError = true
 
         stream.on "end", -> end "Server prematurely closed"
+
+        if !waitForPolicyFile
+            send(START_OF_TEST_RUN_ACK)
     listening = true
     end = (error)->
         if listening
