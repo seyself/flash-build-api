@@ -1,0 +1,49 @@
+{
+  "name": "flash-build-api",
+  "version": "0.0.9",
+  "dependencies": {
+    "node-expat": {
+      "version": "2.0.0"
+    },
+    "xmldom": {
+      "version": "0.1.16"
+    },
+    "coffee-script": {
+      "version": "1.6.2"
+    },
+    "should": {
+      "version": "1.2.2"
+    },
+    "mocha": {
+      "version": "1.9.0",
+      "dependencies": {
+        "commander": {
+          "version": "0.6.1"
+        },
+        "growl": {
+          "version": "1.7.0"
+        },
+        "jade": {
+          "version": "0.26.3",
+          "dependencies": {
+            "mkdirp": {
+              "version": "0.3.0"
+            }
+          }
+        },
+        "diff": {
+          "version": "1.0.2"
+        },
+        "debug": {
+          "version": "0.7.2"
+        },
+        "mkdirp": {
+          "version": "0.3.3"
+        },
+        "ms": {
+          "version": "0.3.0"
+        }
+      }
+    }
+  }
+}

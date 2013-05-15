@@ -1,8 +1,9 @@
 runUnitTest = require './runUnitTest'
+path = require 'path'
 {exec} = require 'child_process'
 {getFlexHome} = require './utils'
 
-module.exports = (args, path, onComplete)->
+module.exports = (args, cwd, onComplete)->
     try
         flexHome = getFlexHome(args)
     catch e
@@ -11,9 +12,12 @@ module.exports = (args, path, onComplete)->
 
     cmd = (onComplete) ->
         try
-            cmd = "#{flexHome}/bin/adl #{args.descriptor} -profile extendedDesktop"
-            console.info cmd, path
-            return exec cmd, {cwd: path}, onComplete
+            appXml = path.resolve(cwd, args.descriptor)
+            appXmlFile = path.basename(appXml)
+            cwd = path.dirname(appXml)
+            cmd = "#{flexHome}/bin/adl #{appXmlFile} -profile extendedDesktop"
+            console.info cmd, cwd
+            return exec cmd, {cwd: cwd}, onComplete
         catch e
             console.error e.stack
             onComplete(e)
