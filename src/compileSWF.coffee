@@ -97,9 +97,13 @@ module.exports = (args, root, onComplete) ->
         flexHome = getFlexHome(args)
         args = prepareFlashArgs(deepExtend(args, args.additionalArguments), root, flexHome)
         argList = ["+flexlib=\"#{flexHome}/frameworks\""]
+        if args.inheritedOptions
+            argList.push args.inheritedOptions
         argList = addDefinesSpecially(args, argList)
-        argList = addRegularArguments(args, argList, "=", "additionalArguments", "additionalOptions", "flexHome", "asc2", "define")
-        argList.push args.additionalOptions
+        console.info "HELLO!!!!"
+        argList = addRegularArguments(args, argList, "=", "additionalArguments", "inheritedOptions", "additionalOptions", "flexHome", "asc2", "define")
+        if args.additionalOptions
+            argList.push args.additionalOptions
         if args.additionalArguments
             argList = addDefinesSpecially(args.additionalArguments, argList)
             
