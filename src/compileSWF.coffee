@@ -100,7 +100,6 @@ module.exports = (args, root, onComplete) ->
         if args.inheritedOptions
             argList.push args.inheritedOptions
         argList = addDefinesSpecially(args, argList)
-        console.info "HELLO!!!!"
         argList = addRegularArguments(args, argList, "=", "additionalArguments", "inheritedOptions", "additionalOptions", "flexHome", "asc2", "define")
         if args.additionalOptions
             argList.push args.additionalOptions
