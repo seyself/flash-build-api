@@ -14,7 +14,13 @@ module.exports = (data, inputFile, outputFile, mainFile, version, id, onComplete
                             subchild.firstChild.data = mainFile
                 when "versionNumber"
                     if version?
-                        child.firstChild.data = version
+                        child.firstChild.data = (
+                            if typeof version == "function"
+                                version(child.firstChild.data);
+                            else 
+                                version
+                        )
+                    version = child.firstChild.data
                 when "id"
                     if id?
                         child.firstChild.data = id
@@ -25,7 +31,10 @@ module.exports = (data, inputFile, outputFile, mainFile, version, id, onComplete
         fs.writeFile outputFile, new XMLSerializer().serializeToString(doc), (error, result)->
             if error then onComplete(error)
             else
-                onComplete(null, id)
+                onComplete(null, {
+                    id: id,
+                    version: version
+                })
 
     catch e
         console.error e.stack

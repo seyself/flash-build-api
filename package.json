@@ -1,6 +1,6 @@
 {
   "name": "flash-build-api",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "Various (opinionated) wrappers for binaries of the air and flex sdk",
   "main": "lib/index.js",
   "scripts": {
@@ -19,7 +19,10 @@
     "wrapper",
     "api"
   ],
-  "author": "Martin Heidegger <mh@leichtgewicht.at>",
+  "author": {
+    "name": "Martin Heidegger",
+    "email": "mh@leichtgewicht.at"
+  },
   "license": "BSD",
   "devDependencies": {
     "should": ">1.2.1",
