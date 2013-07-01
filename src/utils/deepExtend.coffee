@@ -10,7 +10,7 @@ deepExtend = (a, b)->
                 target[name] = nowValue.concat(value)
             else if is_plain_obj(value) and is_plain_obj(nowValue)
                 target[name] = deepExtend(nowValue, value)
-            else if value?
+            else if value? || (nowValue == undefined)
                 target[name] = value
     return target
 
