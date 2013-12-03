@@ -88,6 +88,7 @@ prepareFlashArgs = (args, root, flexHome) ->
     pushToMember(args, "compiler.library-path", "#{flexHome}/frameworks/libs/osmf.swc")
     pushToMember(args, "compiler.library-path", "#{flexHome}/frameworks/libs/textLayout.swc")
     pushToMember(args, "compiler.library-path", "#{flexHome}/frameworks/libs/air/aircore.swc")
+    pushToMember(args, "compiler.library-path", "#{flexHome}/frameworks/locale/en_US/framework_rb.swc")
     pushToMember(args, "compiler.external-library-path", "#{flexHome}/frameworks/libs/air/airglobal.swc")
 
     return args
